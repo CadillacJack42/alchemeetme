@@ -33,5 +33,6 @@ test('Should render the user profile', async () => {
   const likeList = screen.getByRole('list')
   expect(likeList.children).toHaveLength(6)
   expect(likeList.children[0]).toHaveTextContent(/react/i)
+  expect(likeList.children[2]).toHaveTextContent(/traveling/i)
   expect(likeList.children[5]).toHaveTextContent(/card games/i)
 })
