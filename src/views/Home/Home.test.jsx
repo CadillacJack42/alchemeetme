@@ -1,3 +1,5 @@
+import { render, screen } from '@testing-library/react'
+import App from '../../App'
 
 const user = {
   id: 1,
@@ -10,6 +12,26 @@ const user = {
   color: 'crimson',
 }
 
-test('Should render the user profile', () => {
+test('Should render the user profile', async () => {
+  render(<App />)
+  const avatar = await screen.findByAltText('avatar')
+  expect(avatar).toHaveClass('object-fill')
 
+  const username = await screen.findAllByText('Vonta')
+  expect(username[1]).toHaveClass('text-3xl')
+
+  const motto = screen.getByLabelText('motto')
+  expect(motto).toHaveTextContent(/res non verba/i)
+
+  const interestsHeader = await screen.findByText(/interests/i)
+  expect(interestsHeader).toHaveClass('text-center text-xl')
+
+  const headerImg = screen.getByRole('banner')
+  const logo = await screen.findByAltText('Alchemy Logo')
+  expect(headerImg).toContainElement(logo)
+
+  const likeList = screen.getByRole('list')
+  expect(likeList.children).toHaveLength(6)
+  expect(likeList.children[0]).toHaveTextContent(/react/i)
+  expect(likeList.children[5]).toHaveTextContent(/card games/i)
 })
